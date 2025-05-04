@@ -8,33 +8,33 @@ body {
 
 @layer base {
   :root {
-    --background: 0 0% 98%; /* Lighter gray background */
-    --foreground: 240 10% 3.9%; /* Dark gray text */
+    --background: 0 0% 100%;
+    --foreground: 240 10% 3.9%;
 
-    --card: 0 0% 100%; /* White cards */
+    --card: 0 0% 100%;
     --card-foreground: 240 10% 3.9%;
 
-    --popover: 0 0% 100%; /* White popovers */
+    --popover: 0 0% 100%;
     --popover-foreground: 240 10% 3.9%;
 
-    --primary: 120 39% 49%; /* Green (#4CAF50) */
-    --primary-foreground: 0 0% 98%; /* White text on primary */
+    --primary: 142 72% 29%; /* Deeper, more sophisticated green */
+    --primary-foreground: 0 0% 100%;
 
-    --secondary: 0 0% 94.1%; /* Light gray (#F0F0F0) */
-    --secondary-foreground: 240 5.9% 10%; /* Dark text on secondary */
+    --secondary: 220 14% 96%; /* Subtle blue-gray */
+    --secondary-foreground: 240 10% 3.9%;
 
-    --muted: 0 0% 94.1%; /* Light gray */
-    --muted-foreground: 240 3.8% 46.1%; /* Muted text */
+    --muted: 220 14% 96%; /* Light gray */
+    --muted-foreground: 240 4% 46%; /* Muted text */
 
-    --accent: 0 0% 94.1%; /* Light gray (Orange will be applied with Tailwind classes) */
-    --accent-foreground: 240 5.9% 10%;
+    --accent: 220 14% 96%; /* Light gray (Orange will be applied with Tailwind classes) */
+    --accent-foreground: 240 10% 3.9%;
 
-    --destructive: 0 84.2% 60.2%;
+    --destructive: 0 84% 60.2%;
     --destructive-foreground: 0 0% 98%;
 
-    --border: 0 0% 89.8%; /* Slightly darker gray border */
-    --input: 0 0% 89.8%;
-    --ring: 120 39% 49%; /* Green for focus rings */
+    --border: 220 13% 91%; /* Slightly darker gray border */
+    --input: 220 13% 91%;
+    --ring: 142 72% 29%; /* Green for focus rings */
 
     --chart-1: 120 39% 49%;
     --chart-2: 36 100% 50%; /* Orange accent for charts */
@@ -42,7 +42,7 @@ body {
     --chart-4: 0 0% 63.9%;
     --chart-5: 0 0% 83.1%;
 
-    --radius: 0.5rem;
+    --radius: 0.75rem;
 
     /* Sidebar variables (can keep defaults or adjust if sidebar is used heavily) */
     --sidebar-background: 0 0% 98%;
@@ -66,24 +66,24 @@ body {
     --popover: 240 10% 3.9%;
     --popover-foreground: 0 0% 98%;
 
-    --primary: 120 39% 55%; /* Slightly lighter green for dark mode */
-    --primary-foreground: 240 5.9% 10%;
+    --primary: 142 72% 29%; /* Slightly lighter green for dark mode */
+    --primary-foreground: 0 0% 98%;
 
-    --secondary: 240 3.7% 15.9%; /* Darker gray */
+    --secondary: 240 4% 16%; /* Darker gray */
     --secondary-foreground: 0 0% 98%;
 
-    --muted: 240 3.7% 15.9%;
+    --muted: 240 4% 16%;
     --muted-foreground: 240 5% 64.9%;
 
-    --accent: 240 3.7% 15.9%;
+    --accent: 240 4% 16%;
     --accent-foreground: 0 0% 98%;
 
     --destructive: 0 62.8% 30.6%;
     --destructive-foreground: 0 0% 98%;
 
-    --border: 240 3.7% 15.9%;
-    --input: 240 3.7% 15.9%;
-    --ring: 120 39% 55%;
+    --border: 240 4% 16%;
+    --input: 240 4% 16%;
+    --ring: 142 72% 29%;
 
     --chart-1: 120 39% 55%;
     --chart-2: 36 100% 60%; /* Lighter orange for dark mode */
@@ -115,8 +115,16 @@ body {
 
 /* Add specific orange color class */
 .text-calorie-accent {
-  color: #FF9800; /* Orange accent */
+  color: #FF6B35; /* More vibrant orange */
+  @apply font-semibold;
 }
 .dark .text-calorie-accent {
-  color: #FFA726; /* Lighter Orange for dark mode */
+  color: #FF8B5E; /* Warmer Orange for dark mode */
+}
+
+/* Add smooth transitions to interactive elements */
+@layer utilities {
+  .transition-smooth {
+    @apply transition-all duration-300 ease-in-out;
+  }
 }

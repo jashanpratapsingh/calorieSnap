@@ -85,58 +85,74 @@ export function ImageUploader({ onImageUpload, currentImage, disabled = false }:
   };
 
   return (
-    <div
-      className={cn(
-        "border-2 border-dashed rounded-lg p-6 text-center cursor-pointer transition-colors duration-200 ease-in-out",
-        isDragging ? "border-primary bg-accent" : "border-border hover:border-primary/50",
-        disabled ? "cursor-not-allowed opacity-50 bg-secondary" : "",
-        currentImage ? "border-solid" : ""
-      )}
-      onClick={triggerFileInput}
-      onDrop={handleDrop}
-      onDragOver={handleDragOver}
-      onDragLeave={handleDragLeave}
-      aria-disabled={disabled}
-      role="button"
-      tabIndex={disabled ? -1 : 0}
-      onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') triggerFileInput(); }}
-    >
-      <Input
-        ref={fileInputRef}
-        type="file"
-        accept="image/*"
-        onChange={handleFileChange}
-        className="hidden"
-        disabled={disabled}
-      />
-      {currentImage ? (
-        <div className="relative group">
-          <Image
-            src={currentImage}
-            alt="Uploaded food"
-            width={300}
-            height={200}
-            className="mx-auto rounded-md object-contain max-h-48"
-          />
-           {!disabled && (
-             <Button
-               variant="destructive"
-               size="icon"
-               className="absolute top-1 right-1 h-6 w-6 opacity-0 group-hover:opacity-100 transition-opacity"
-               onClick={clearImage}
-               aria-label="Remove image"
-             >
-               <X className="h-4 w-4" />
-             </Button>
-           )}
-        </div>
-      ) : (
-        <div className="flex flex-col items-center justify-center space-y-2 text-muted-foreground">
-          <UploadCloud className="h-12 w-12" />
-          <p className="font-semibold">Drag & drop an image here</p>
-          <p className="text-sm">or click to browse</p>
-        </div>
-      )}
+    <div className="w-full">
+      <div
+        className={cn(
+          "relative flex flex-col items-center justify-center w-full min-h-[300px] rounded-xl border-2 border-dashed transition-smooth",
+          "bg-secondary/50 hover:bg-secondary/70",
+          isDragging ? "border-primary scale-[1.02] bg-secondary/70" : "border-muted-foreground/25",
+          disabled && "opacity-60 cursor-not-allowed"
+        )}
+        onDragOver={(e) => {
+          e.preventDefault();
+          if (!disabled) setIsDragging(true);
+        }}
+        onDragLeave={() => setIsDragging(false)}
+        onDrop={handleDrop}
+      >
+        <input
+          ref={fileInputRef}
+          type="file"
+          className="hidden"
+          onChange={handleFileChange}
+          accept="image/*"
+          disabled={disabled}
+        />
+        
+        {currentImage ? (
+          <div className="relative group w-full h-full min-h-[300px]">
+            <Image
+              src={currentImage}
+              alt="Uploaded food"
+              fill
+              className="object-cover rounded-lg"
+            />
+            <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-smooth flex items-center justify-center rounded-lg">
+              <Button 
+                variant="outline" 
+                size="lg"
+                className="bg-background/90 hover:bg-background/100 transition-smooth"
+                onClick={() => fileInputRef.current?.click()}
+                disabled={disabled}
+              >
+                Change Image
+              </Button>
+            </div>
+          </div>
+        ) : (
+          <div 
+            className="flex flex-col items-center justify-center gap-4 p-6 cursor-pointer text-center"
+            onClick={() => !disabled && fileInputRef.current?.click()}
+          >
+            <div className="rounded-full bg-primary/10 p-4 transition-smooth group-hover:scale-110">
+              <UploadCloud className="h-10 w-10 text-primary transition-smooth" />
+            </div>
+            <div className="space-y-2">
+              <h3 className="font-semibold text-lg">Drop your image here</h3>
+              <p className="text-muted-foreground text-sm">
+                Supports JPG, PNG and WEBP
+              </p>
+            </div>
+            <Button 
+              variant="outline" 
+              disabled={disabled}
+              className="mt-2 transition-smooth hover:scale-105"
+            >
+              Choose File
+            </Button>
+          </div>
+        )}
+      </div>
     </div>
   );
 }

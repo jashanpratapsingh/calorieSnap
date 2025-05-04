@@ -26,36 +26,29 @@ const formatConfidence = (confidence: number): string => {
 };
 
 export function FoodResults({ results }: FoodResultsProps) {
-  if (!results || results.length === 0) {
-    return <p className="text-center text-muted-foreground">No food items identified yet.</p>;
-  }
-
   return (
-    <div className="space-y-6">
-      <h3 className="text-xl font-bold text-center mb-6 tracking-tight">Identified Food Items</h3>
+    <div className="grid gap-4 w-full max-w-2xl mx-auto">
       {results.map((item, index) => (
-        <Card
-          key={`${item.name}-${index}`}
-          className={`overflow-hidden shadow-lg hover:shadow-2xl transition-shadow duration-300 rounded-2xl bg-white/90 animate-in fade-in-0 slide-in-from-bottom-6 duration-700 delay-[${index * 100}ms]`}
-          style={{ willChange: 'transform, opacity' }}
-        >
-          <CardContent className="p-6 flex items-center justify-between gap-6">
-            <div className="flex-grow">
-              <CardTitle className="text-lg font-semibold mb-2 text-gray-900">{item.name}</CardTitle>
+        <Card key={index} className="transition-smooth hover:shadow-lg hover:scale-[1.02]">
+          <CardContent className="p-6 flex justify-between items-center gap-4">
+            <div className="flex-1 min-w-0">
+              <h3 className="font-semibold text-lg truncate mb-2">{item.name}</h3>
               <Badge
                 variant={getConfidenceBadgeVariant(item.confidence)}
-                className="text-xs px-4 py-2 rounded-full font-semibold shadow-sm"
+                className="text-xs px-4 py-1.5 rounded-full font-medium shadow transition-smooth hover:scale-105"
                 aria-label={`Confidence level: ${formatConfidence(item.confidence)}`}
               >
                 {formatConfidence(item.confidence)} confidence
               </Badge>
             </div>
-            <div className="flex items-center space-x-2 flex-shrink-0 text-right">
-              <Flame className="h-6 w-6 text-calorie-accent" />
-              <span className="text-2xl font-bold text-calorie-accent">
-                {item.calories > 0 ? item.calories : '-'}
-              </span>
-              {item.calories > 0 && <span className="text-base text-muted-foreground">kcal</span>}
+            <div className="flex items-center gap-3 flex-shrink-0">
+              <Flame className="h-7 w-7 text-calorie-accent transition-smooth hover:scale-110 hover:rotate-12" />
+              <div className="flex flex-col items-end">
+                <span className="text-3xl font-bold text-calorie-accent tracking-tight">
+                  {item.calories > 0 ? item.calories : '-'}
+                </span>
+                {item.calories > 0 && <span className="text-sm text-muted-foreground">kcal</span>}
+              </div>
             </div>
           </CardContent>
         </Card>

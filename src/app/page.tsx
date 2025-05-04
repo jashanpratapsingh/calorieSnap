@@ -99,48 +99,68 @@ export default function Home() {
   }, [imageDataUri, fetchCaloriesForItems]);
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-50 px-2">
-      <Card className="w-full max-w-4xl md:w-3/5 lg:w-2/5 min-w-[340px] mx-auto shadow-2xl rounded-3xl p-2 md:p-6 animate-in fade-in-0 zoom-in-95 duration-700">
-        <CardHeader className="pb-0">
-          <CardTitle className="text-3xl font-extrabold text-center text-primary tracking-tight">
-            Snap Your Calories 
-          </CardTitle>
-        </CardHeader>
-        <CardContent className="space-y-6 p-6">
-          <ImageUploader onImageUpload={handleImageUpload} currentImage={imageDataUri} disabled={isLoading} />
+    <main className="container flex-1 py-6 md:py-12">
+      <div className="mx-auto flex max-w-[980px] flex-col items-center gap-8">
+        <div className="flex flex-col items-center text-center gap-3">
+          <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight transition-colors">
+            Snap Food,{' '}  
+            <span className="text-primary">Count Calories</span>
+          </h1>
+          <p className="max-w-[600px] text-lg text-muted-foreground">
+            Take a photo of your food and instantly get calorie information using AI-powered recognition.
+          </p>
+        </div>
 
-          {isLoading && (
-            <div className="flex items-center justify-center p-6">
-              <Loader2 className="h-8 w-8 animate-spin text-primary" />
-              <span className="ml-2 text-muted-foreground">Analyzing food...</span>
-            </div>
-          )}
+        <Card className="w-full transition-smooth">
+          <CardHeader>
+            <CardTitle>Upload Food Image</CardTitle>
+          </CardHeader>
+          <CardContent className="flex flex-col gap-6">
+            <ImageUploader
+              onImageUpload={handleImageUpload}
+              currentImage={imageDataUri}
+              disabled={isLoading}
+            />
 
-          {error && (
-            <Alert variant="destructive">
-              <AlertTitle>Error</AlertTitle>
-              <AlertDescription>{error}</AlertDescription>
-              <Button variant="link" onClick={resetState} className="mt-2">Try again</Button>
-            </Alert>
-          )}
+            {isLoading && (
+              <div className="flex items-center justify-center gap-2 p-4 transition-smooth">
+                <Loader2 className="h-8 w-8 animate-spin text-primary" />
+                <span className="text-lg text-muted-foreground">Analyzing food...</span>
+              </div>
+            )}
 
-          {!isLoading && calorieResults.length > 0 && (
-            <FoodResults results={calorieResults} />
-          )}
+            {error && (
+              <Alert variant="destructive" className="transition-smooth animate-in fade-in-0 duration-300">
+                <AlertTitle>Error</AlertTitle>
+                <AlertDescription className="flex flex-col gap-4">
+                  {error}
+                  <Button variant="outline" onClick={resetState} className="self-start">
+                    Try again
+                  </Button>
+                </AlertDescription>
+              </Alert>
+            )}
 
-          {!isLoading && identifiedFoods && calorieResults.length === 0 && !error && (
-            <p className="text-center text-muted-foreground">
-              Identified food items, but couldn't fetch calorie data.
-            </p>
-          )}
+            {!isLoading && calorieResults.length > 0 && (
+              <div className="animate-in fade-in-0 duration-500">
+                <FoodResults results={calorieResults} />
+              </div>
+            )}
 
-          {!isLoading && !imageDataUri && !error && (
-            <p className="text-center text-muted-foreground">
-              Upload an image to get started!
-            </p>
-          )}
-        </CardContent>
-      </Card>
-    </div>
+            {!isLoading && identifiedFoods && calorieResults.length === 0 && !error && (
+              <p className="text-center text-muted-foreground animate-in fade-in-0 duration-300">
+                Identified food items, but couldn't fetch calorie data.
+              </p>
+            )}
+
+            {!isLoading && !imageDataUri && !error && (
+              <p className="text-center text-muted-foreground animate-in fade-in-0 duration-300">
+                Upload an image to get started!
+              </p>
+            )}
+          </CardContent>
+        </Card>
+      </div>
+    </main>
   );
 }
